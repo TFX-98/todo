@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODOS</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="todos">
+      <!-- <h1>{{ h1 }}</h1> -->
+      <!-- <input type="checkbox" @change='allCompleteFunc' v-model="allComplete">
+
+      <div class="input-wrapper">
+          <input type="text" v-model="newItem" @keyup.enter="addItem" />
+        <button @click="addItem">Add to List</button>
+      </div> -->
+      <ul>
+        <li
+          v-for="(item, index) in items"
+          :key="index"
+          :class="{complete: item.complete}"
+        >
+          <input
+            type="checkbox"
+            :id="'checkbox-' + index"
+            v-model="item.complete"
+          />
+          <label :for="'checkbox-' + index"> {{item.name}} </label>
+          <span class="remove-item" @click="removeItem(index)">×</span>
+        </li>
+      </ul>
+      <div class="active-wrapper">
+        <span class="active-count">{{listLength}}</span>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
