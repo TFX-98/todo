@@ -3,10 +3,9 @@
     <HeadModule />
     <div class="todo-app">
       <InputModule :items="items" :allCompleted="allCompleted" />
-      <ListModule :items="items" />
-      <FooterModule :items="items" @removeItems="updateItems" />
-      <!--Tabs-->
-      <!--Fix bag ifAllCompl-->
+      <ListModule :items="items" :listStatus="listStatus" />
+      <FooterModule :items="items" :listStatus="listStatus" @removeItems="updateItems" @changeListStatus="updateList" />
+      <!--Outside computed-->
     </div>
   </div>
 </template>
@@ -27,12 +26,22 @@ export default {
   data() {
     return {
       items: [],
+      listStatus: "All",
       allCompleted: false
     };
   },
   methods: {
-    updateItems(result) {
-      this.items = result;
+    updateItems(res) {
+      this.items = res;
+    },
+    updateList(res) {
+      this.listStatus = res;
+    }
+  },
+  computed:{
+    ifAllComplete(){
+      this.allCompleted = this.items.length == this.items.filter(x=>x.complete == true).length;
+      return this.allCompleted;
     }
   }
 };

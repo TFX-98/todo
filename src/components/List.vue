@@ -1,20 +1,15 @@
 <template>
   <ul>
     <li
-      v-for="(item, index) in items"
+      v-for="(item, index) in listStatusResult"
       :key="index"
       :class="{ complete: item.complete }"
     >
-      <!-- <input
-        type="checkbox"
-        :id="'checkbox-' + index"
-        v-model="item.complete"
-      /> -->
       <div class="item-status" @click="completeItem(index)">
         <span v-if="item.complete">✓</span>
         <span v-else></span>
       </div>
-      <div class="item-text">{{ item.name }}</div>
+      <input type="text" v-model="item.name" class="item-text" />
       <span class="remove-item" @click="removeItem(index)">×</span>
     </li>
   </ul>
@@ -22,13 +17,37 @@
 
 <script>
 export default {
-  props: ["items"],
+  props: ["items",'listStatus'],
+  data() {
+    return {
+      itemText: "",
+      result: this.items,
+    };
+  },
   methods: {
-    completeItem(index){
-      return this.items[index].complete = !this.items[index].complete
+    completeItem(index) {
+      return (this.items[index].complete = !this.items[index].complete);
     },
     removeItem(index) {
       return this.items.splice(index, 1);
+    }
+  },
+  computed:{
+    listStatusResult() {
+      switch (this.listStatus) {
+        case "Active":
+          this.result = this.items.filter(el => (el.complete == false));
+          break;
+        case "Completed":
+          this.result = this.items.filter(el => (el.complete == true));
+          break;
+        default:
+          this.result = this.items;
+          break;
+      }
+      console.log(this.listStatus)
+      console.log(this.result)
+      return this.result;
     }
   }
 };
@@ -59,10 +78,18 @@ li .item-text {
   line-height: 1;
   font-weight: 100;
   padding-left: 15px;
+  border: none;
+  padding-right: 45px;
+  font-size: inherit;
+  line-height: 1;
+}
+
+li .item-text:focus {
+  outline: none;
 }
 
 .complete .item-text {
-  opacity: .25;
+  opacity: 0.25;
   text-decoration: line-through;
 }
 
@@ -78,7 +105,7 @@ li .item-status span {
   display: block;
   width: 22px;
   height: 22px;
-  margin: auto;
+  margin: 4px auto 0 auto;
   line-height: 0.75;
   text-align: center;
   color: green;

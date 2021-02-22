@@ -4,6 +4,12 @@
       <span class="active-count">{{ activeLength }} item left</span>
     </div>
 
+    <div class="list-status">
+      <span @click="changeList" data-value="All" class="active">All</span>
+      <span @click="changeList" data-value="Active">Active</span>
+      <span @click="changeList" data-value="Completed">Completed</span>
+    </div>
+
     <div class="clear-completed" v-show="completedLength">
       <span @click="clearCompleted">Clear completed</span>
     </div>
@@ -12,7 +18,7 @@
 
 <script>
 export default {
-  props: ["items"],
+  props: ["items", "listStatus"],
   methods: {
     clearCompleted() {
       this.allCompleted = false;
@@ -20,6 +26,13 @@ export default {
         "removeItems",
         this.items.filter(item => item.complete == false)
       );
+    },
+    changeList(event) {
+      const listParent = document.querySelectorAll(".list-status span");
+      listParent.forEach(el => el.classList.remove("active"));
+      const { target } = event;
+      target.classList.add("active");
+      this.$emit("changeListStatus", target.getAttribute("data-value"));
     }
   },
   computed: {
@@ -34,8 +47,7 @@ export default {
 </script>
 
 <style scoped>
-
-footer{
+footer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -46,17 +58,29 @@ footer{
 footer > * {
   box-sizing: border-box;
   color: #777;
-  padding: 0 10px;
+  padding: 0 15px;
 }
 
-footer .clear-completed{
-  padding: 0;
-  position: relative;
+footer .active-wrapper {
+  flex: 0 0 30%;
+}
+
+footer .list-status {
+  flex: 0 0 40%;
+  text-align: center;
+}
+
+footer .list-status span {
+  margin: 0 3px;
   cursor: pointer;
 }
 
-footer .clear-completed::after{
-  content: '';
+footer .list-status span {
+  position: relative;
+}
+
+footer .list-status span:after {
+  content: "";
   display: block;
   height: 1px;
   width: 0;
@@ -64,11 +88,40 @@ footer .clear-completed::after{
   position: absolute;
   left: 0;
   bottom: -3px;
-  transition: width .25s;
+  transition: width 0.25s;
 }
 
-footer .clear-completed:hover:after{
+footer .list-status span:hover::after {
   width: 100%;
 }
 
+footer .list-status .active:after {
+  width: 100%;
+}
+
+footer .clear-completed {
+  cursor: pointer;
+  flex: 0 0 30%;
+  text-align: right;
+}
+
+footer .clear-completed span {
+  position: relative;
+}
+
+footer .clear-completed span:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 0;
+  background: #777;
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  transition: width 0.25s;
+}
+
+footer .clear-completed:hover span:after {
+  width: 100%;
+}
 </style>
