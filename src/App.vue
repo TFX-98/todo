@@ -1,12 +1,13 @@
 <template>
-  <div id="todo">
+  <div class="todo">
     <HeadModule />
-    <InputModule :items="items" :allCompleted="allCompleted" />
-    <ListModule :items="items" />
-    <FooterModule :items="items" @removeItems="updateItems" />
-    <!--Tabs-->
-    <!--Fix bag ifAllCompl-->
-    <!--Styles-->
+    <div class="todo-app">
+      <InputModule :items="items" :allCompleted="allCompleted" />
+      <ListModule :items="items" />
+      <FooterModule :items="items" @removeItems="updateItems" />
+      <!--Tabs-->
+      <!--Fix bag ifAllCompl-->
+    </div>
   </div>
 </template>
 
@@ -38,12 +39,13 @@ export default {
 </script>
 
 <style>
-.input-wrapper {
-  text-align: center;
+.todo {
+  max-width: 500px;
+  margin: auto;
 }
 
-.input-wrapper input {
-  max-width: 200px;
-  width: 100%;
+.todo-app {
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
 }
 </style>

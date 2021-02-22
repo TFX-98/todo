@@ -18,5 +18,6 @@ h1 {
   font-weight: 100;
   text-align: center;
   color: rgba(175, 47, 47, 0.15);
+  margin: 50px auto 30px auto;
 }
 </style>
