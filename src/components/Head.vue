@@ -2,12 +2,11 @@
   <h1>{{ head }}</h1>
 </template>
 
-
 <script>
-module.exports = {
-  data: function() {
+export default {
+  data() {
     return {
-      head: "test"
+      head: "todos"
     };
   }
 };

@@ -1,22 +1,37 @@
 <template>
   <div id="todo">
-    <head-module></head-module>
-
-    <input type="checkbox" @change="allCompleteFunc" v-model="allComplete" />
-    <div id="input-wrapper">
-      <input type="text" v-model="newItem" @keyup.enter="addItem" />
-      <button @click="addItem">Add to List</button>
-    </div>
+    <HeadModule />
+    <InputModule :items="items" :allCompleted="allCompleted" />
+    <ListModule :items="items" />
+    <FooterModule :items="items" @removeItems="updateItems" />
+    <!--Tabs-->
+    <!--Fix bag ifAllCompl-->
   </div>
 </template>
 
 <script>
 import HeadModule from "./components/Head.vue";
+import InputModule from "./components/Input.vue";
+import ListModule from "./components/List.vue";
+import FooterModule from "./components/Footer.vue";
 
 export default {
-  name: "todo",
   components: {
-    HeadModule
+    HeadModule,
+    InputModule,
+    ListModule,
+    FooterModule
+  },
+  data() {
+    return {
+      items: [],
+      allCompleted: false
+    };
+  },
+  methods: {
+    updateItems(result) {
+      this.items = result;
+    }
   }
 };
 </script>
