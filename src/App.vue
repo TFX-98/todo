@@ -6,6 +6,7 @@
     <FooterModule :items="items" @removeItems="updateItems" />
     <!--Tabs-->
     <!--Fix bag ifAllCompl-->
+    <!--Styles-->
   </div>
 </template>
 
